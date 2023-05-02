@@ -12,6 +12,15 @@ class Channel:
         """Экземпляр инициализируется id канала. Дальше все данные будут подтягиваться по API."""
 
         self.channel_id = channel_id
+        self.channel_info = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
+        self.title = self.channel_info['items'][0]['snippet']['title']
+        self.description = self.channel_info['items'][0]['snippet']['description']
+        self.url = f'https://www.youtube.com/channel/{self.channel_info["items"][0]["id"]}'
+        self.subs = self.channel_info['items'][0]['statistics']['subscriberCount']
+        self.video_count = self.channel_info['items'][0]['statistics']['videoCount']
+        self.views = self.channel_info['items'][0]['statistics']['viewCount']
+
+        self.__service = self.youtube
 
 
 
@@ -21,3 +30,13 @@ class Channel:
 
         channel_info = self.youtube.channels().list(id=self.channel_id, part='snippet,statistics').execute()
         print(json.dumps(channel_info, indent=2, ensure_ascii=False))
+
+    @classmethod
+    def get_service(cls):
+        """Dозвращает объект для работы с YouTube API"""
+        return cls.youtube
+
+    def to_json(self):
+        """Cохраняет в файл значения атрибутов экземпляра `Channel`"""
+        with open('vdud.json', 'w', encoding="utf-8") as outfile:
+            json.dump(self.channel_info, outfile, indent=2, ensure_ascii=False)
