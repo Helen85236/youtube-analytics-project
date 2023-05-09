@@ -1,10 +1,10 @@
-from src.channel import Channel
+#from src.channel import Channel
 
-if __name__ == '__main__':
-    vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
-    vdud.print_info()
+#if __name__ == '__main__':
+#    vdud = Channel('UCMCgOm8GZkHp8zJ6l7_hIuA')
+#    vdud.print_info()
 
-    """
+#    """
 {
   "kind": "youtube#channelListResponse",
   "etag": "TUX2o600Qs42JSCO9hckmDv7scY",
@@ -54,3 +54,10 @@ if __name__ == '__main__':
   ]
 }
     """
+    
+    
+print("строка 1")
+print("строка 2")
+print("строка 3")
+print("строка 4")
+print("строка 5")
