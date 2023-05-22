@@ -4,6 +4,7 @@ from datetime import timedelta
 from googleapiclient.discovery import build
 import json
 
+
 class PlayList:
 
     API_KEY = os.getenv('YT_API_KEY')
@@ -15,15 +16,14 @@ class PlayList:
         self.title = self.playlist['items'][0]['snippet']['title']
         self.url = f'https://www.youtube.com/playlist?list={self.playlist_id}'
         self.playlist_videos = self.youtube.playlistItems().list(playlistId=self.playlist_id,
-                                                            part='contentDetails',
-                                                            maxResults=50,
-                                                            ).execute()
+                                                                 part='contentDetails',
+                                                                 maxResults=50,
+                                                                 ).execute()
         self.video_ids = [video['contentDetails']['videoId'] for video in self.playlist_videos['items']]
         self.video_response = self.youtube.videos().list(part='contentDetails,statistics',
-                                                    id=','.join(self.video_ids)
-                                                    ).execute()
+                                                         id=','.join(self.video_ids)
+                                                         ).execute()
         self.video_response_info = json.dumps(self.video_response, indent=2)
-
 
     @property
     def total_duration(self):
@@ -38,7 +38,6 @@ class PlayList:
             duration = isodate.parse_duration(iso_8601_duration)
             total_duration += duration
         return total_duration
-
 
     def show_best_video(self):
         """
